@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic -std=c99 -DDEBUG 
 LIB=-lncurses
-OBJS=main.o
+OBJS=main.o mem.o
 NAME=tim
 
 all: tim
@@ -12,7 +12,10 @@ run: tim
 tim: $(OBJS)
 	$(CC) -o $(NAME) $(OBJS) $(LIB)
 
-main.o: main.c
+main.o: main.c mem.c mem.h common.h
+	$(CC) -c $< $(CFLAGS) 
+
+mem.o: mem.c mem.h common.h
 	$(CC) -c $< $(CFLAGS) 
 
 clean:

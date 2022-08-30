@@ -1,22 +1,31 @@
 #include <ncurses.h>
 #include <stdio.h>
 
+#include "common.h"
+#include "mem.h"
+
+
 void update();
 void init();
 void end();
 
-int c = -1;
+Tim tim;
 
 int main(int argc, char** argv) {
+    LOG("%s %d\n", argv[0], argc);
+
     init();
-    while (c != 'q') {
+    while (tim.c != 'q') {
         update();
-        c = getch();
+        tim.c = getch();
     }
     end();
 }
 
 void update() {
+    clear();
+    addch(tim.c);
+    refresh();
 }
 
 void init() {
