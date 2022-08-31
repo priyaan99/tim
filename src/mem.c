@@ -50,7 +50,7 @@ void remove_char(Line* line, int at) {
 Page new_page() {
 	Page t;
 	t.size = 0;
-	t.cap = 12;
+	t.cap = 2;
 	t.lines = (Line*) malloc(sizeof(Line)*t.cap);
 
 	LOG("NEW_PAGE");
@@ -67,10 +67,10 @@ void add_line(Page* page, Line line, int at) {
 		return;
 	}
 
-	if (page->size+1 >= page->cap) {
+	if (page->size >= page->cap) {
 		page->cap = page->cap * 2;
 		page->lines = (Line*) realloc(page->lines, sizeof(Line)*page->cap);
-		LOG("add_line :: realloc page with size [%d]\n", at);
+		LOG("add_line :: realloc page with size [%d]\n", page->cap);
 	}
 
 	for (int i = page->size; i > at; i--) {
@@ -106,12 +106,4 @@ void remove_line(Page* page, int at) {
 	//memmove(page->lines+at, page->lines+at+1, page->size-at);
 	page->size--;
 }
-
-
-
-
-
-
-
-
 

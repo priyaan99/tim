@@ -1,10 +1,13 @@
 #ifndef MEM_H
 #define MEM_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 typedef struct {
 	char* buf;
 	int size;
-	int cap;
+	size_t cap;
 } Line;
 
 typedef struct {

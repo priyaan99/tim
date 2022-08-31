@@ -1,2 +1,4 @@
 
-=> Test remove_char()
+=> separate LOG(...) INTO LOG(...) and LOGIN(...) macro
+    Use LOG for once in func 
+    and any time LOGIN()

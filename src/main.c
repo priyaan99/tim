@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "common.h"
+#include "fileio.h"
 #include "mem.h"
 
 void update();
@@ -12,6 +13,19 @@ Tim tim;
 
 int main(int argc, char** argv) {
     LOG("%s %d\n", argv[0], argc);
+
+    tim.page = new_page(); // init tim page
+
+    read_file(&tim.page, "main.c");
+
+    LOG(":::: PAGE size [%d] :::\n", tim.page.size);
+    LOG(":::: PAGE cap [%d] :::\n", tim.page.cap);
+
+    for (int i = 0; i < tim.page.size; i++) {
+        for (int j = 0; j < tim.page.lines[i].size; j++) {
+            putchar(tim.page.lines[i].buf[j]);
+        }
+    }
 
     /*
     init();
