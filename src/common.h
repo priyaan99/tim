@@ -16,4 +16,14 @@
 	#define STR(...)
 #endif
 
+#ifdef DEBUG_EXTRA
+	#define LOGx(...) fprintf(stdout, __VA_ARGS__)
+	#define STRx(pointer, size) \
+		for (int i = 0; i < size; i++) putchar(pointer[i]); \
+		putchar('\n')
+#else
+	#define STRx(...)
+	#define LOGx(...) 
+#endif
+
 #endif
