@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define LI long int
+#define I int
+
 #ifdef DEBUG
 	#define LOG(...) fprintf(stdout, __VA_ARGS__)
 	#define STR(pointer, size) \
@@ -15,6 +18,8 @@
 	#define LOG(...) 
 	#define STR(...)
 #endif
+
+//#define DEBUG_EXTRA
 
 #ifdef DEBUG_EXTRA
 	#define LOGx(...) fprintf(stdout, __VA_ARGS__)

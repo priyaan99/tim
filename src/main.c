@@ -14,12 +14,14 @@ Tim tim;
 int main(int argc, char** argv) {
     LOG("%s %d\n", argv[0], argc);
 
+	/*
     init();
     while (tim.c != 'q') {
         update();
         tim.c = getch();
     }
     end();
+		*/
 }
 
 void update() {
@@ -57,7 +59,6 @@ void test_line() {
     remove_char(&line, line.size);
 
     STR(line.buf, line.size);
-
 }
 
 void test_page() {
@@ -114,4 +115,28 @@ void test_write_file() {
 }
 
 
+void test_read_file() {
+    tim.page = new_page();
+    read_file(&tim.page, "main.c");
 
+    for (int i = 0; i < tim.page.size; i++) {
+	for (int j = 0; j < tim.page.lines[i].size; j++) {
+	    putchar(tim.page.lines[i].buf[j]);
+	}
+    }
+
+}
+
+void test_free_page() {
+    tim.page = new_page();
+    read_file(&tim.page, "main.c");
+
+    for (int i = 0; i < tim.page.size; i++) {
+	for (int j = 0; j < tim.page.lines[i].size; j++) {
+	    putchar(tim.page.lines[i].buf[j]);
+	}
+    }
+
+    free_page(&tim.page);
+
+}

@@ -29,4 +29,8 @@ Page new_page();
 void add_line(Page* page, Line line, int at);
 void remove_line(Page* page, int at);
 
+void free_line_buf(char* buf);
+void free_page_line(Line* line);
+void free_page(Page* page);
+
 #endif

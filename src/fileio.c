@@ -9,14 +9,17 @@ void read_file(Page* page, const char* filename) {
 		return;
 	}
 
+    int bytes_read;
 	while (1) {
 		Line line = new_line();
-		line.size = getline(&line.buf, &line.cap, f);
-		LOGx("getline size-[%d] cap-[%d]\n", line.size, line.cap);
+		bytes_read = getline(&line.buf, &line.cap, f);
 
-		if (line.size == -1) {
+		if (bytes_read == -1) {
 			break;
 		}
+
+        line.size = bytes_read; 
+		LOGx("getline size-[%d] cap-[%d]\n", line.size, line.cap);
 
 		add_line(page, line, page->size);
 	}

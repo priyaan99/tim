@@ -107,3 +107,18 @@ void remove_line(Page* page, int at) {
 	page->size--;
 }
 
+void free_line_buf(char* buf) {
+	free(buf);
+	LOGx("-> freed line buf\n");
+}
+void free_page_line(Line* line) {
+	free_line_buf(line->buf);
+	//free(line);
+	LOGx("\tfreed page line\n");
+}
+
+void free_page(Page* page) {
+	for (int i = 0; i < page->size; i++) {
+		free_page_line(page->lines+i);
+	}
+}
