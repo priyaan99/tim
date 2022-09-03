@@ -21,12 +21,19 @@ typedef struct {
 	int cap;
 } Page;
 
+typedef enum {
+	NORMAL = 0,
+	INSERT,
+	CMD,
+} Mode;
+
 typedef struct {
 	int c;
 	Page page;
 	Size curpos;
 	Size pagepos;
 	Size wsize;
+	Mode mode;
 	char* filename;
 } Tim;
 
