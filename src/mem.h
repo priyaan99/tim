@@ -5,6 +5,11 @@
 #include <stdlib.h>
 
 typedef struct {
+	int row;
+	int col;
+} Size;
+
+typedef struct {
 	char* buf;
 	int size;
 	size_t cap;
@@ -19,6 +24,10 @@ typedef struct {
 typedef struct {
 	int c;
 	Page page;
+	Size curpos;
+	Size pagepos;
+	Size wsize;
+	char* filename;
 } Tim;
 
 Line new_line();

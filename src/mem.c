@@ -53,7 +53,7 @@ Page new_page() {
 	t.cap = 2;
 	t.lines = (Line*) malloc(sizeof(Line)*t.cap);
 
-	LOG("NEW_PAGE");
+	LOG("NEW_PAGE\n");
 
 	return t;
 }
@@ -80,12 +80,6 @@ void add_line(Page* page, Line line, int at) {
 
 	page->lines[at] = line;
 	page->size += 1;
-
-	/*
-	memmove(page->lines+at+1, page->lines+at, page->size-at);
-	page->lines[at] = line;
-	page->size++;
-	*/
 }
 
 void remove_line(Page* page, int at) {
