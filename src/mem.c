@@ -30,11 +30,11 @@ void add_char(Line* line, int at, char c) {
 	line->size++;
 }
 
-void remove_char(Line* line, int at) {
+int remove_char(Line* line, int at) {
 	LOG("\nREMOVE_CHAR() at [%d]\n", at);
 	if (at < 0 || at >= line->size) {
 		LOGx("remove_char() :: index out of bound at [%d]\n", at);
-		return;
+		return 0;
 	}
 
 	if (line->size+1 >= line->cap) {
@@ -45,6 +45,7 @@ void remove_char(Line* line, int at) {
 
 	memmove(line->buf+at, line->buf+at+1, line->size-at);
 	line->size--;
+	return 1;
 }
 
 Page new_page() {

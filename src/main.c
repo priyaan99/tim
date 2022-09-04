@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #include "common.h"
 #include "fileio.h"
@@ -81,6 +82,42 @@ static void insert() {
 		tim.mode = NORMAL;
 		return;
 	}
+
+	if (isalnum(tim.c) || (strchr("~`!@#$%^&*()-_=+{}[]:\"';,./|\\?<>", tim.c) != NULL)) {
+		add_char(&tim.page.lines[tim.curpos.row+tim.pagepos.row], tim.curpos.col+tim.pagepos.col, tim.c);
+		tim.curpos.col++;
+	}
+	// delete char if c backspace
+	if (tim.c == 263) {
+		if (remove_char(&tim.page.lines[tim.curpos.row+tim.pagepos.row], tim.curpos.col+tim.pagepos.col-1)) {
+			tim.curpos.col--;
+		}
+	}
+
+	if (tim.c == '\n') {
+		/*
+		add_char(&tim.page.lines[tim.curpos.row+tim.pagepos.row], tim.curpos.col+tim.pagepos.col, tim.c);
+		// if in between line copy rest char to newline
+		Line tl = new_line();
+		int i = 0;
+		while (tim.curpos.col+tim.pagepos.col+i < tim.page.lines[tim.curpos.row+tim.pagepos.row].size) {
+			add_char(&tl, tl.size, tim.page.lines[tim.curpos.row+tim.pagepos.row].buf[tim.curpos.col+tim.pagepos.col+i]);
+			i++;
+		}
+
+		*/
+		// add line only if curpos is on last of line
+		if (tim.curpos.col+tim.pagepos.col == tim.page.lines[tim.curpos.row+tim.pagepos.row].size-1) {
+			Line l = new_line();
+			add_char(&l, l.size, '\n');
+			add_line(&tim.page, l, tim.curpos.row+tim.pagepos.row+1);
+			// move cur to newline and set curpos col to 0;
+			tim.curpos.row++;
+			tim.curpos.col = 0;
+		}
+
+	}
+
 }
 
 void input() {

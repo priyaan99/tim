@@ -39,7 +39,7 @@ typedef struct {
 
 Line new_line();
 void add_char(Line* line, int at, char c);
-void remove_char(Line* line, int at);
+int remove_char(Line* line, int at);
 
 Page new_page();
 void add_line(Page* page, Line line, int at);
