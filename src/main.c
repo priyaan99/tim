@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     LOG("%s %d\n", argv[0], argc);
 
     init();
-    while (tim.c != 'q') {
+    while (tim.c != -1) {
         update();
 		input();
     }
@@ -29,6 +29,23 @@ int main(int argc, char** argv) {
 }
 
 static void normal() {
+	// enter insert mode on pressing single i
+	if (tim.c == 9) {
+		tim.mode = INSERT;
+		return;
+	}
+
+	// on ctrl-s write file
+	if (tim.c == 19) {
+		write_file(&tim.page, tim.filename);
+		return;
+	}
+	// on ctrl-q quite session without writing file 
+	if (tim.c == 17) {
+		tim.c = -1;
+		return;
+	}
+
 	if (tim.c == 'k' && tim.pagepos.row + tim.curpos.row > 0) {
 		if (tim.curpos.row == 0) tim.pagepos.row--;
 		else tim.curpos.row--;
@@ -41,15 +58,33 @@ static void normal() {
 
 		tim.curpos.col = 0;
 	}
+
+	// TODO: to many bugs here on move left or right when char is tab '\t'
+	//		as tab takes 8 or 4 col space in page col;
+	// TODO: solve tab problem
+	if (tim.c == 'h' &&  tim.curpos.col > 0) {
+		if (tim.pagepos.col > 0 && tim.curpos.col == 0) tim.pagepos.col--;
+		else tim.curpos.col--;
+	}
+	if (tim.c == 'l' ) {
+		if (tim.curpos.col < tim.page.lines[tim.pagepos.row+tim.curpos.row].size-1) {
+			if (tim.curpos.col == tim.wsize.col-1) tim.pagepos.col++;
+			else tim.curpos.col++;
+		}
+	}
+
 }
 
 static void insert() {
-}
-
-static void cmd() {
+	// insert NORMAL mode if key is 'jj'
+	if (tim.c == 14) {
+		tim.mode = NORMAL;
+		return;
+	}
 }
 
 void input() {
+	tim.prevc = tim.c;
 	tim.c = getch();
 
 	// on window size changed
@@ -66,10 +101,6 @@ void input() {
 	if (tim.mode == INSERT) 
 	{
 		insert();
-	}
-	if (tim.mode == CMD)
-	{
-		cmd();
 	}
 }
 
@@ -92,6 +123,7 @@ static void print_buf() {
 		row++;
 		prow++;
 	}
+	printw("%d", tim.c);
 	move(tim.curpos.row, tim.curpos.col);
 }
 
@@ -109,6 +141,9 @@ void init() {
     raw();
     noecho();
     keypad(stdscr, TRUE);
+
+	tim.c = -10;
+	tim.prevc = -1;
 
 	getmaxyx(stdscr, tim.wsize.row, tim.wsize.col);
 	tim.filename = "test";

@@ -24,11 +24,11 @@ typedef struct {
 typedef enum {
 	NORMAL = 0,
 	INSERT,
-	CMD,
 } Mode;
 
 typedef struct {
 	int c;
+	int prevc;
 	Page page;
 	Size curpos;
 	Size pagepos;

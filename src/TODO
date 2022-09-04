@@ -1,4 +1,4 @@
 
-=> separate LOG(...) INTO LOG(...) and LOGIN(...) macro
-    Use LOG for once in func 
-    and any time LOGIN()
+=> BUG : Tab misunderstood by h l in normal mode 
+    cannot move to complete end of line using l key
+    as tab is not recognised by move(row, col) func.
