@@ -8,3 +8,6 @@ ABANDONING THE PROJECT !!!
 <ctrl-s> to save 
 <ctrl-i> to switch in insert mode
 <ctrl-n> to switch in normal mode
+
+# Add f() to delete line
+    left for later 
